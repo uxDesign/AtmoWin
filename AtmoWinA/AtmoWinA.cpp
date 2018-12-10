@@ -363,8 +363,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR    lpCmd
 			delete pSetupDlg;
 		}
 
+		// Set color order
+		CAtmoTools::SwitchColorOrder(atmoDynData, atmoConfig->getColorOrder());
+
 		// Setup And Launch Effect Thread...
-		CAtmoTools::SwitchEffect(atmoDynData,atmoConfig->getEffectMode());
+		CAtmoTools::SwitchEffect(atmoDynData,atmoConfig->getEffectMode());		
 
 		// Handles the TrayIcon - and his Popup Menu...
 		CTrayIconWindow *trayIcon = new CTrayIconWindow( hResInstance, atmoDynData );
@@ -396,7 +399,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR    lpCmd
 		// hoffentlich letztes Release durchführen?
 		atmoComRemoteControlex->Release(); // sollte RefCount auf 0 bringen und das Objekt mittels delete löschen
 
-		// vermeiden das andere Thread speziell die COM Server nochmal zugriff erlangen während der
+		// vermeiden, dass andere Threads, speziell die COM Server, nochmal Zugriff erlangen während der
 		// Shutdown von AtmoWin läuft ... würde nur Problem geben!
 		atmoDynData->LockCriticalSection();
 
@@ -422,7 +425,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR    lpCmd
 		if( queue != NULL )
 			delete queue;
 
-		// atmoConnection erneut aus atmoDynData auslesen - da während das Programm lieft die Lokale Variable
+		// atmoConnection erneut aus atmoDynData auslesen - da während das Programm lieft, die Lokale Variable
 		// ungültig geworden sein könnte...
 		CAtmoTools::ShowShutdownColor(atmoDynData);
 

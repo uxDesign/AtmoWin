@@ -22,7 +22,8 @@ private:
 	EffectMode m_eTempEffectMode;
 private: // handles...
 	HWND m_hCbxDevicetypes;
-	HWND m_hCbxEffects;
+	HWND m_hCbxEffects; 
+	HWND m_hCbxColorOrder;
 
 	ATMO_BOOL m_SaveHardWhiteSetup;
 

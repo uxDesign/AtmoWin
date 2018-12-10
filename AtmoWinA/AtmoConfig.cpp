@@ -103,6 +103,7 @@ void CAtmoConfig::LoadDefaults()
 	m_DMX_BaudrateIndex              = 0; // Low 115kbaud 	
 	m_DMX_RGB_Channels               = 5; // so wie atmolight
 	m_eEffectMode                    = emDisabled;
+	m_eColorOrder					 = emRGB;
 	m_Fnordlicht_Amount              = 2; // default fnordlicht, there are 2 fnordlicht's!
 	m_Hardware_contrast_blue         = 100;
 	m_Hardware_contrast_green        = 100;

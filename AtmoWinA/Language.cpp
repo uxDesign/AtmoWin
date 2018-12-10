@@ -113,6 +113,12 @@ char *sTextSettingDialog[MAX_SETTINGSDIALOG_STRINGS] =
 "Default",                       //51
 "Delay [ms]:",                   //52
 "Enhanced Live view (Windows 8 or higher)", //53
+"RGB",                           // 54
+"RBG",                           // 55
+"GBR",                           // 56
+"GRB",                           // 57
+"BRG",                           // 58
+"BGR"                            // 59
 };
 
 char *sTextAtmoGradients[MAX_GRADIENTSDIALOG_STRINGS] = 

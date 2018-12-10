@@ -271,6 +271,17 @@ ATMO_BOOL CAtmoSettingsDialog::InitDialog(WPARAM wParam)
 
 	// Achtung - dazu muss die Reihenfolge der Enum Deklaration in AtmoConfig.h mit obiger Liste Synchron sein*g*
 	ComboBox_SetCurSel(m_hCbxEffects, (int)config->getEffectMode());
+
+	// Color order
+	m_hCbxColorOrder = getDlgItem(IDC_COLORORDER);
+	ComboBox_AddString(m_hCbxColorOrder, Lng->sSettingText[54]);
+	ComboBox_AddString(m_hCbxColorOrder, Lng->sSettingText[55]);
+	ComboBox_AddString(m_hCbxColorOrder, Lng->sSettingText[56]);
+	ComboBox_AddString(m_hCbxColorOrder, Lng->sSettingText[57]);
+	ComboBox_AddString(m_hCbxColorOrder, Lng->sSettingText[58]);
+	ComboBox_AddString(m_hCbxColorOrder, Lng->sSettingText[59]);
+	ComboBox_SetCurSel(m_hCbxColorOrder, (int)config->getColorOrder());
+
 	hwndCtrl = getDlgItem(IDC_CB_PROFILES);
 
 	__int64 count = Utils->profiles.GetCount();	
@@ -902,6 +913,9 @@ ATMO_BOOL CAtmoSettingsDialog::ExecuteCommand(HWND hControl,int wmId, int wmEven
 			EffectMode newEffectMode = (EffectMode)ComboBox_GetCurSel(getDlgItem(IDC_EFFECTS));
 			pAtmoConfig->setEffectMode(newEffectMode);
 
+			ColorOrder newColorOrder = (ColorOrder)ComboBox_GetCurSel(getDlgItem(IDC_COLORORDER));
+			pAtmoConfig->setColorOrder(newColorOrder);
+
 			if(UpdateColorChangeValues(ATMO_FALSE) == ATMO_FALSE)   return 0;
 			if(UpdateLrColorChangeValues(ATMO_FALSE) == ATMO_FALSE) return 0;
 			if(UpdateLiveViewValues(ATMO_FALSE) == ATMO_FALSE) return 0;
@@ -1020,6 +1034,16 @@ ATMO_BOOL CAtmoSettingsDialog::ExecuteCommand(HWND hControl,int wmId, int wmEven
 			}
 			break;
 		}
+
+	case IDC_COLORORDER:
+	{
+		if (wmEvent == CBN_SELCHANGE)
+		{
+			ColorOrder newColorOrder = (ColorOrder)ComboBox_GetCurSel(hControl);
+			CAtmoTools::SwitchColorOrder(this->m_pDynData, newColorOrder);
+		}
+		break;
+	}
 
 	case IDC_DEVICETYPE: 
 		{

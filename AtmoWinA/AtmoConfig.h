@@ -40,6 +40,7 @@ protected:
 #endif
 	enum AtmoConnectionType m_eAtmoConnectionType;
 	enum EffectMode m_eEffectMode;
+	enum ColorOrder m_eColorOrder;
 
 	ATMO_BOOL m_IgnoreConnectionErrorOnStartup;
 
@@ -327,6 +328,8 @@ public:
 
 	EffectMode getEffectMode() { return m_eEffectMode; }
 	void setEffectMode(EffectMode value) { m_eEffectMode = value; }
+	ColorOrder getColorOrder() { return m_eColorOrder; }
+	void setColorOrder(ColorOrder value) { m_eColorOrder = value; }
 
 	ATMO_BOOL getShow_statistics() { return m_show_statistics; }
 

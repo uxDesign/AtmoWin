@@ -176,6 +176,15 @@ enum EffectMode {
 	    emColorMode = 5
    };
 
+enum ColorOrder {
+	emRGB = 0,
+	emRBG = 1,
+	emGBR = 2,
+	emBGR = 3,
+	emBRG = 4,
+	emGRB = 5
+};
+
 enum LivePictureSource {
        lpsDisabled = 0,
        lpsScreenCapture = 1,
@@ -265,5 +274,15 @@ typedef struct
 {
   unsigned int h, s, v;
 } tHSVColor;
+
+
+//------ tColorOrder -----------------------------------------------------------
+typedef struct
+{
+	// color order of LED strip
+	// red=0, green=1, blue=2
+	unsigned int c1, c2, c3;
+} tColorOrder;
+
 
 #endif

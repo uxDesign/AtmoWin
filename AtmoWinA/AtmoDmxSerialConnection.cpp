@@ -17,6 +17,7 @@
 #include "AtmoDefs.h"
 #include "AtmoDmxSerialConnection.h"
 #include "DmxTools.h"
+#include "AtmoTools.h"
 
 #if !defined(_ATMO_VLC_PLUGIN_)
 #include "DmxConfigDialog.h"
@@ -160,17 +161,16 @@ ATMO_BOOL CAtmoDmxSerialConnection::isOpen(void) {
 }
 
 ATMO_BOOL CAtmoDmxSerialConnection::HardwareWhiteAdjust(int global_gamma,
-																												int global_contrast,
-																												int contrast_red,
-																												int contrast_green,
-																												int contrast_blue,
-																												int gamma_red,
-																												int gamma_green,
-																												int gamma_blue,
-																												ATMO_BOOL storeToEeprom) {
-																													return ATMO_FALSE;
+														int global_contrast,
+														int contrast_red,
+														int contrast_green,
+														int contrast_blue,
+														int gamma_red,
+														int gamma_green,
+														int gamma_blue,
+														ATMO_BOOL storeToEeprom) {
+															return ATMO_FALSE;
 }
-
 
 
 
@@ -198,6 +198,8 @@ ATMO_BOOL CAtmoDmxSerialConnection::SendData(pColorPacket data) {
 
 	int zoneIdx, z = 0;
 
+	ColorOrder colorOrder = m_pAtmoConfig->getColorOrder();
+
 	for(int channel = 0; channel < getNumChannels(); channel++) {
 		if(m_ChannelAssignment && (channel < m_NumAssignedChannels))
 			zoneIdx = m_ChannelAssignment[channel];
@@ -208,32 +210,33 @@ ATMO_BOOL CAtmoDmxSerialConnection::SendData(pColorPacket data) {
 			if( m_dmx_channels_base[z] >= 0 )
 				iBuffer = m_dmx_channels_base[z] + 3;
 			else
-				iBuffer += 3;
+				iBuffer += 3;			
+
+			int r, g, b;
 
 			if(m_pAtmoConfig->isWhiteAdjPerChannel()) 
 			{
 				int wr;
 				int wg;
 				int wb;
-				m_pAtmoConfig->getChannelWhiteAdj( channel, wr, wg, wb);   
+				m_pAtmoConfig->getChannelWhiteAdj( channel, wr, wg, wb);   				
 
-				DMXout[iBuffer]   = (data->zone[zoneIdx].r * wr) / 256;
-				DMXout[iBuffer+1] = (data->zone[zoneIdx].g * wg) / 256;
-				DMXout[iBuffer+2] = (data->zone[zoneIdx].b * wb) / 256;
+				r   = (data->zone[zoneIdx].r * wr) / 256;
+				g = (data->zone[zoneIdx].g * wg) / 256;
+				b = (data->zone[zoneIdx].b * wb) / 256;
 
 				/* CAtmoConfig *config = m_pAtmoDynData->getAtmoConfig();
 
 				DMXout[iBuffer]   = config->red_whiteAdj[data->zone[zoneIdx].r];
 				DMXout[iBuffer+1] = config->green_whiteAdj[data->zone[zoneIdx].g];
 				DMXout[iBuffer+2] = config->blue_whiteAdj[data->zone[zoneIdx].b];*/
-
-
-
 			} else {
-				DMXout[iBuffer]   = data->zone[zoneIdx].r;
-				DMXout[iBuffer+1] = data->zone[zoneIdx].g;
-				DMXout[iBuffer+2] = data->zone[zoneIdx].b;
-			}
+				r   = data->zone[zoneIdx].r;
+				g = data->zone[zoneIdx].g;
+				b = data->zone[zoneIdx].b;
+			}			
+
+			CAtmoTools::setDMXout(DMXout, iBuffer, colorOrder, r, g, b);			
 		}
 
 		if( m_dmx_channels_base[z] >= 0 )
@@ -324,9 +327,12 @@ ATMO_BOOL CAtmoDmxSerialConnection::setChannelColor(int channel, tRGBColor color
 
 	Lock();
 
-	DMXout[channel+0+3]=color.r;
+	/*DMXout[channel+0+3]=color.r;
 	DMXout[channel+1+3]=color.g;
-	DMXout[channel+2+3]=color.b;
+	DMXout[channel+2+3]=color.b;*/
+
+	ColorOrder colorOrder = m_pAtmoConfig->getColorOrder();
+	CAtmoTools::setDMXout(DMXout, channel+3, colorOrder, color.r, color.g, color.b);
 
 #if defined(WIN32)
 	//WriteFile(m_hComport, DMXout, 768+3, &iBytesWritten, NULL);

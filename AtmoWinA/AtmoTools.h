@@ -26,6 +26,7 @@ private:
 	~CAtmoTools(void);
 public:
 	static EffectMode SwitchEffect(CAtmoDynData *pDynData, EffectMode newEffectMode);
+	static ColorOrder SwitchColorOrder(CAtmoDynData *pDynData, ColorOrder newColorOrder);
 	static LivePictureSource SwitchLiveSource(CAtmoDynData *pDynData, LivePictureSource newLiveSource);
 
 	static void ShowShutdownColor(CAtmoDynData *pDynData);
@@ -42,6 +43,8 @@ public:
 	static int trilinear(CAtmoConfig *pAtmoConfig,int x, int y, int z, int col);
 
 	static int SetChannelAssignment(CAtmoDynData *pDynData, int index);
+
+	static void setDMXout(unsigned char DMXout[768 + 3], int iBuffer, ColorOrder colorOrder, int r, int g, int b);
 
 #if !defined(_ATMO_VLC_PLUGIN_)
 	static void SaveBitmap(HDC hdc,HBITMAP hBmp,char *fileName);

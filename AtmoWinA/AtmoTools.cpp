@@ -253,6 +253,31 @@ EffectMode CAtmoTools::SwitchEffect(CAtmoDynData *pDynData, EffectMode newEffect
 	return oldEffectMode;
 }
 
+ColorOrder CAtmoTools::SwitchColorOrder(CAtmoDynData *pDynData, ColorOrder newColorOrder)
+{
+	if (pDynData == NULL)
+	{
+		return emRGB;
+	}
+
+	pDynData->LockCriticalSection();
+
+	CAtmoConfig *atmoConfig = pDynData->getAtmoConfig();
+	if (atmoConfig == NULL)
+	{
+		pDynData->UnLockCriticalSection();
+		return emRGB;
+	}
+
+	ColorOrder oldColorOrder = atmoConfig->getColorOrder();
+
+	atmoConfig->setColorOrder(newColorOrder);
+
+	pDynData->UnLockCriticalSection();
+
+	return oldColorOrder;
+}
+
 LivePictureSource CAtmoTools::SwitchLiveSource(CAtmoDynData *pDynData, LivePictureSource newLiveSource)
 {
 	LivePictureSource oldSource;
@@ -804,6 +829,51 @@ int CAtmoTools::SetChannelAssignment(CAtmoDynData *pDynData, int index)
 	return oldIndex;
 }
 
+void CAtmoTools::setDMXout(unsigned char DMXout[768 + 3], int iBuffer, ColorOrder colorOrder, int r, int g, int b){
+	switch ((int)colorOrder) {
+	case ((int)emRGB):
+		DMXout[iBuffer] = r;
+		DMXout[iBuffer + 1] = g;
+		DMXout[iBuffer + 2] = b;
+		break;
+
+	case ((int)emRBG):
+		DMXout[iBuffer] = r;
+		DMXout[iBuffer + 1] = b;
+		DMXout[iBuffer + 2] = g;
+		break;
+
+	case ((int)emGBR):
+		DMXout[iBuffer] = g;
+		DMXout[iBuffer + 1] = b;
+		DMXout[iBuffer + 2] = r;
+		break;
+
+	case ((int)emGRB):
+		DMXout[iBuffer] = g;
+		DMXout[iBuffer + 1] = r;
+		DMXout[iBuffer + 2] = b;
+		break;
+
+	case ((int)emBRG):
+		DMXout[iBuffer] = b;
+		DMXout[iBuffer + 1] = r;
+		DMXout[iBuffer + 2] = g;
+		break;
+
+	case ((int)emBGR):
+		DMXout[iBuffer] = b;
+		DMXout[iBuffer + 1] = g;
+		DMXout[iBuffer + 2] = r;
+		break;
+
+	default:
+		DMXout[iBuffer] = r;
+		DMXout[iBuffer + 1] = g;
+		DMXout[iBuffer + 2] = b;
+		break;
+	}
+}
 
 #if !defined(_ATMO_VLC_PLUGIN_)
 
