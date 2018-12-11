@@ -246,20 +246,13 @@ ATMO_BOOL CAtmoDmxSerialConnection::SendData(pColorPacket data) {
 #if defined(WIN32)
 	if (dmx_ch<65)
 	{
-		//WriteFile(m_hComport, Dummy1, 2, &iBytesWritten, NULL); // send to COM-Port
-		//WriteFile(m_hComport, DMXout, 256+3, &iBytesWritten, NULL); // send to COM-Port
 		WriteFile(m_hComport, DMXout, 256+3, &iBytesWritten, NULL); // send to COM-Port
 		//WriteFile(m_hComport, Dummy1, 2, &iBytesWritten, NULL); // send to COM-Port
 	}
 	else
-	{
-
+	{		
+		WriteFile(m_hComport, DMXout, 768+3, &iBytesWritten, NULL); // send to COM-Port		
 		//WriteFile(m_hComport, Dummy3, 2, &iBytesWritten, NULL); // send to COM-Port
-		//WriteFile(m_hComport, Dummy3, 2, &iBytesWritten, NULL); // send to COM-Port
-		WriteFile(m_hComport, DMXout, 768+3, &iBytesWritten, NULL); // send to COM-Port
-		// WriteFile(m_hComport, DMXout, 768+3, &iBytesWritten, NULL); // send to COM-Port
-		//WriteFile(m_hComport, Dummy3, 2, &iBytesWritten, NULL); // send to COM-Port
-
 	}
 
 #else

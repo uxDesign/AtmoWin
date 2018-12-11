@@ -44,7 +44,7 @@ public:
 
 	static int SetChannelAssignment(CAtmoDynData *pDynData, int index);
 
-	static void setDMXout(unsigned char DMXout[768 + 3], int iBuffer, ColorOrder colorOrder, int r, int g, int b);
+	static void setDMXout(unsigned char DMXout[CAP_MAX_NUM_ZONES * 3 + 4], int iBuffer, ColorOrder colorOrder, int r, int g, int b);
 
 #if !defined(_ATMO_VLC_PLUGIN_)
 	static void SaveBitmap(HDC hdc,HBITMAP hBmp,char *fileName);

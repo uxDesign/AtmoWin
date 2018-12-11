@@ -103,7 +103,7 @@ void CAtmoConfig::LoadDefaults()
 	m_DMX_BaudrateIndex              = 0; // Low 115kbaud 	
 	m_DMX_RGB_Channels               = 5; // so wie atmolight
 	m_eEffectMode                    = emDisabled;
-	m_eColorOrder					 = emRGB;
+	m_eColorOrder					           = emRGB;
 	m_Fnordlicht_Amount              = 2; // default fnordlicht, there are 2 fnordlicht's!
 	m_Hardware_contrast_blue         = 100;
 	m_Hardware_contrast_green        = 100;
@@ -205,6 +205,7 @@ void CAtmoConfig::Assign(CAtmoConfig *pAtmoConfigSrc)
 
 	this->m_eAtmoConnectionType          = pAtmoConfigSrc->m_eAtmoConnectionType;
 	this->m_eEffectMode                  = pAtmoConfigSrc->m_eEffectMode;
+  this->m_eColorOrder                  = pAtmoConfigSrc->m_eColorOrder;
 
 	this->m_WhiteAdjustment_Red          = pAtmoConfigSrc->m_WhiteAdjustment_Red;
 	this->m_WhiteAdjustment_Green        = pAtmoConfigSrc->m_WhiteAdjustment_Green;

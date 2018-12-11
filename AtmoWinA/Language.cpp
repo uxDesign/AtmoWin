@@ -118,7 +118,8 @@ char *sTextSettingDialog[MAX_SETTINGSDIALOG_STRINGS] =
 "GBR",                           // 56
 "GRB",                           // 57
 "BRG",                           // 58
-"BGR"                            // 59
+"BGR",                           // 59
+"Color order",                   // 60
 };
 
 char *sTextAtmoGradients[MAX_GRADIENTSDIALOG_STRINGS] = 

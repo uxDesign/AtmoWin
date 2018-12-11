@@ -829,7 +829,7 @@ int CAtmoTools::SetChannelAssignment(CAtmoDynData *pDynData, int index)
 	return oldIndex;
 }
 
-void CAtmoTools::setDMXout(unsigned char DMXout[768 + 3], int iBuffer, ColorOrder colorOrder, int r, int g, int b){
+void CAtmoTools::setDMXout(unsigned char DMXout[CAP_MAX_NUM_ZONES * 3 + 4], int iBuffer, ColorOrder colorOrder, int r, int g, int b){
 	switch ((int)colorOrder) {
 	case ((int)emRGB):
 		DMXout[iBuffer] = r;

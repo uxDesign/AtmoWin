@@ -45,6 +45,7 @@ void CAtmoXMLConfig::SaveSettings(std::string Profile1)
 	GetProfile().SetConfig(configSection, "lastprofile", (char*)lastprofile.data());
 	GetProfile().SetConfig(configSection, "defaultprofile", (char*)defaultprofile.data());
 	GetProfile().SetConfig(configSection, "EffectMode", (int)m_eEffectMode);
+  GetProfile().SetConfig(configSection, "ColorOrder", (int)m_eColorOrder);
 	GetProfile().SetConfig(configSection, "comport", this->m_Comport);
 	GetProfile().SetConfig(configSection, "Arducomport", this->m_ArduComport);
 	GetProfile().SetConfig(configSection, "comport_1", m_Comports[0]);
@@ -331,6 +332,7 @@ void CAtmoXMLConfig::LoadSettings(std::string profile1)
 		m_ArduComport=1; 
 	} 
 	m_eEffectMode = (EffectMode)GetProfile().GetIntOrDefault(configSection, "EffectMode", (int)m_eEffectMode);
+  m_eColorOrder = (ColorOrder)GetProfile().GetIntOrDefault(configSection, "ColorOrder", (int)m_eColorOrder);
 
 	m_WhiteAdjustment_Red    = CheckByteValue(GetProfile().GetIntOrDefault(newconfigSection, "WhiteAdjustment_Red", m_WhiteAdjustment_Red));
 	m_WhiteAdjustment_Green  = CheckByteValue(GetProfile().GetIntOrDefault(newconfigSection, "WhiteAdjustment_Green", m_WhiteAdjustment_Green));
